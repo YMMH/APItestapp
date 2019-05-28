@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">API test app</string>
-    <string name="base_url">http://ymmh.iptime.org</string>
+    <string name="base_url">http://ymmh.iptime.org/</string>
 </resources>

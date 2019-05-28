@@ -3,10 +3,10 @@ package com.example.apitestapp;
 public class UserLocation{
     //get info
     public final String name;
-    public final String lat;
-    public final String lng;
+    public final double lat;
+    public final double lng;
 
-    public UserLocation(String name, String lat, String lng)
+    public UserLocation(String name, double lat, double lng)
     {
         this.name = name;
         this.lat = lat;

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ApiActivity">
+
+    <TextView
+        android:id="@+id/mainlogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp"
+        android:text="Airclue"
+        android:textSize="50dp"
+        android:textColor="#AAAAAA"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_end="211dp"/>
+
+    <Button
+        android:id="@+id/core_bt"
+        android:layout_width="180dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="20dp"
+        android:text="START"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:background="#00A3D2"
+        android:onClick="onButtonClicked"
+        style="@style/ViewShadow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="69dp"
+        android:text="GUARD"
+        android:layout_marginBottom="23dp"
+        app:layout_constraintRight_toLeftOf="@id/core_bt"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="69dp"
+        android:text="SET"
+        android:layout_marginBottom="23dp"
+        app:layout_constraintLeft_toRightOf="@id/core_bt"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
