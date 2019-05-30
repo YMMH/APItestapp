@@ -41,17 +41,19 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
+        android:id="@+id/left_bt"
         android:layout_width="80dp"
         android:layout_height="69dp"
-        android:text="GUARD"
+        android:text="GET"
         android:layout_marginBottom="23dp"
         app:layout_constraintRight_toLeftOf="@id/core_bt"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
+        android:id="@+id/right_bt"
         android:layout_width="80dp"
         android:layout_height="69dp"
-        android:text="SET"
+        android:text="BIND"
         android:layout_marginBottom="23dp"
         app:layout_constraintLeft_toRightOf="@id/core_bt"
         app:layout_constraintBottom_toBottomOf="parent"/>
