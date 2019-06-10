@@ -1,5 +1,8 @@
 package com.example.apitestapp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +14,10 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 public class AirclueService extends Service {
 
@@ -64,13 +69,18 @@ public class AirclueService extends Service {
 
             case 0:
                 setLocationProvider();
+                makeForgroundService();//forground service
                 break;
 
             case 1:
+                stopForeground(true);
+                Toast.makeText(getApplicationContext(),"stopForeground", Toast.LENGTH_SHORT).show();
+                stopSelf();
                 break;
         }
 
-        return START_STICKY;//service restarts if it is destroyed
+        //return START_STICKY;//service restarts if it is destroyed
+        return START_NOT_STICKY;
     }
 
     @Override
@@ -114,5 +124,34 @@ public class AirclueService extends Service {
 
     public Location getLocation(){
         return mLocation;
+    }
+
+    private void makeForgroundService(){
+        NotificationManager notificationManager
+                = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel notificationChannel
+                    = new NotificationChannel(NOTIFICATION_CHANNEL_ID, NOTIFICATION_CHANNEL_NAME, importance);
+
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        int notificationId = 1010;
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID);
+        builder.setSmallIcon(R.drawable.airclue_icon);
+        builder.setContentTitle("AirClue 서비스");
+        builder.setContentText("AirClue 작동 중");
+
+        //this leads user to activity when user touches noti,
+        Intent intent = new Intent(getApplicationContext(), CoreActivity.class);
+        PendingIntent contentIntent =
+                PendingIntent.getActivity(getApplicationContext(), 1010, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(contentIntent);
+
+        startForeground(notificationId, builder.build());
+        Toast.makeText(getApplicationContext(),"startForeground", Toast.LENGTH_SHORT).show();
     }
 }

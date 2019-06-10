@@ -1,8 +1,9 @@
 package com.example.apitestapp;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -12,13 +13,14 @@ public class SplashActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_splash);//theme가 있으면 중복x
 
         try{
-            Thread.sleep(3000);
+            Thread.sleep(500);
         }
         catch (InterruptedException e){
             e.printStackTrace();
         }
 
-        startActivity(new Intent(this, GoogleSignInActivity.class));
+        //startActivity(new Intent(this, GoogleSignInActivity.class));
+        startActivity(new Intent(this, PhoneAuthActivity.class));
         finish();
     }
 }
