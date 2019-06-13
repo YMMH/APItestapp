@@ -6,19 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ApiActivity">
 
-
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_1"
         android:layout_width="wrap_content"
@@ -45,16 +32,16 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
-    android:id="@+id/position_static"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="172dp"
-    android:layout_marginBottom="324dp"
-    android:text="위치 :"
-    android:textColor="#00AAFF"
-    android:textSize="10dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent" />
+        android:id="@+id/position_static"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="172dp"
+        android:layout_marginBottom="324dp"
+        android:text="위치 :"
+        android:textColor="#00AAFF"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/time_static"
@@ -118,9 +105,9 @@
 
     <Button
         android:id="@+id/core_bt"
-        android:layout_width="180dp"
+        android:layout_width="100dp"
         android:layout_height="75dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="100dp"
         android:text="START"
         android:textSize="20dp"
         android:textColor="#FFFFFF"
@@ -133,31 +120,12 @@
     <!--android:onClick="onButtonClicked"-->
 
     <Button
-        android:id="@+id/api_bt"
-        android:layout_width="80dp"
-        android:layout_height="69dp"
-        android:text="API"
-        app:layout_constraintBottom_toTopOf="@id/core_bt"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:visibility="invisible"/>
-
-    <Button
-        android:id="@+id/left_bt"
-        android:layout_width="80dp"
-        android:layout_height="69dp"
-        android:text="TEST"
-        android:layout_marginBottom="23dp"
-        app:layout_constraintRight_toLeftOf="@id/core_bt"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <Button
         android:id="@+id/right_bt"
         android:layout_width="80dp"
         android:layout_height="69dp"
         android:text="STOP"
         android:enabled="false"
+        android:visibility="invisible"
         android:layout_marginBottom="23dp"
         app:layout_constraintLeft_toRightOf="@id/core_bt"
         app:layout_constraintBottom_toBottomOf="parent"/>

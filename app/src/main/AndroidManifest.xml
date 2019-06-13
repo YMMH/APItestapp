@@ -14,10 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main">
+        </activity>
 
-        <activity android:name=".PhoneAuthActivity"></activity>
-    <!--android:theme="@style/AppTheme"> -->
-
+        <activity android:name=".PhoneAuthActivity" /> <!-- android:theme="@style/AppTheme"> -->
         <service
             android:name=".AirclueService"
             android:enabled="true"
@@ -36,6 +38,7 @@
         </activity>
         <activity
             android:name=".CoreActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ApiActivity"

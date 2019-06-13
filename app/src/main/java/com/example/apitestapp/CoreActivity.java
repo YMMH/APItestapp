@@ -32,8 +32,11 @@ public class CoreActivity extends AppCompatActivity implements View.OnClickListe
     AirclueService mService;
     boolean mBound = false;
     ImageView circle;
+
     Timer location_timer;
+    int location_timer_flag = 0;
     Timer elapsedtime_timer;
+    int elapsedtime_timer_flag = 0;
     long cnt;
 
     @Override
@@ -49,6 +52,7 @@ public class CoreActivity extends AppCompatActivity implements View.OnClickListe
         //툴바
         Toolbar myToolbar = (Toolbar)findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        myToolbar.setTitle("Air Clue");//툴바 타이틀 설정
 
         //button = findViewById(R.id.core_bt);
         // Button listeners
@@ -58,16 +62,33 @@ public class CoreActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.api_bt).setOnClickListener(this);
 
         circle = findViewById(R.id.circle_img);
+        Toast.makeText(getApplicationContext(), "CoreActivity Created", Toast.LENGTH_SHORT).show();
 
+        //서비스 동작여부 확인
+        Intent intent = new Intent(this, AirclueService.class);
+        if(!mBound) {
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+            mBound = true;
+        }
+/*
+        if(mService.getStatus() == 0){//기존 서비스 동작 없으면
+            unbindService(mConnection);
+            mBound = false;
+        }
+*/
     }
 /*
     public void onButtonClicked(View view){
     }
 */
+////////////////////////////////////////////서비스가 돌면 자동 작동되게 바꿔야함, start안하고 stop시 앱죽는거 예외처리 해야함
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
         if(i == R.id.core_bt) {
+
+            findViewById(R.id.core_bt).setEnabled(false);
 
             if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
                     ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION )
@@ -91,6 +112,9 @@ public class CoreActivity extends AppCompatActivity implements View.OnClickListe
             circle.setVisibility(View.INVISIBLE);//안해주면 안보임
             circle.setVisibility(View.VISIBLE);
 
+
+            //타이머를 서비스에서 돌려야 할듯?
+            //그리고 시작됐을 때 서비스가 돌고 있으면 타이머랑 애니메이션 동작시켜야 함
             //위치 타이머
             location_timer = new Timer();
             TimerTask tt = new TimerTask() {
@@ -102,18 +126,25 @@ public class CoreActivity extends AppCompatActivity implements View.OnClickListe
                     final String string = "위도 "+lat + ",  경도 " + lng;
                     final TextView textView = findViewById(R.id.position_text);
 
+                    //+
+                    final String string2 = location.getProvider();
+                    final TextView textView2 = findViewById(R.id.provider_text);
+                    //+
+
                     //ui thread가 아닌 thread에서 ui변경을 위한 메소드 호출
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
 
                             textView.setText(string);
+                            textView2.setText(string2);
                         }
                     });
                 }
             };
 
-            location_timer.schedule(tt, 500, 5000);
+            location_timer.schedule(tt, 1000, 5000);
+            location_timer_flag = 1;
 
 
             //경과시간 타이머
@@ -123,7 +154,7 @@ public class CoreActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void run() {
 
-                    cnt+=1000;
+
                     final String string = GetTime(cnt);
                     final TextView textView = findViewById(R.id.time_text);
 
@@ -135,13 +166,19 @@ public class CoreActivity extends AppCompatActivity implements View.OnClickListe
                             textView.setText(string);
                         }
                     });
+
+                    cnt+=1000;
                 }
             };
 
-            elapsedtime_timer.schedule(tt2, 0, 1000);
+            elapsedtime_timer.schedule(tt2, 1000, 1000);
+            elapsedtime_timer_flag = 1;
 
+            findViewById(R.id.right_bt).setEnabled(true);
         }
         else if (i == R.id.right_bt){
+
+            findViewById(R.id.right_bt).setEnabled(false);
 
             if(mBound) {
                 Toast.makeText(getApplicationContext(), "unbindService", Toast.LENGTH_SHORT).show();
@@ -160,20 +197,19 @@ public class CoreActivity extends AppCompatActivity implements View.OnClickListe
             circle.clearAnimation();
 
             //타이머 종료
-            location_timer.cancel();
-            elapsedtime_timer.cancel();
+            if(location_timer_flag == 1) {
+                location_timer.cancel();
+                location_timer_flag = 0;
+            }
+            if(elapsedtime_timer_flag == 1) {
+                elapsedtime_timer.cancel();
+                elapsedtime_timer_flag = 0;
+            }
+
+            findViewById(R.id.core_bt).setEnabled(true);
         }
         else if(i == R.id.left_bt){
-            if(mBound) {
-                //int num = mService.getRandomNumber();//unbind 해도 사용 가능하네
-                //Toast.makeText(getApplicationContext(), "number:" + num, Toast.LENGTH_SHORT).show();
-                //mService.setLocationProvider();
-                Location location = mService.getLocation();
-                String string = "Lat:"+location.getLatitude() + ", Lng:" + location.getLongitude();
-                Toast.makeText(this, string, Toast.LENGTH_LONG).show();
-            }
-            else
-                Toast.makeText(this, "nothing", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, MainActivity.class));
         }
         else if(i == R.id.api_bt){
             startActivity(new Intent(this, ApiActivity.class));

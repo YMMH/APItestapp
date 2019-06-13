@@ -27,6 +27,8 @@ public class AirclueService extends Service {
 
     private Location mLocation;
 
+    private int mStatus = 0;
+
     public AirclueService() {
     }
 
@@ -67,12 +69,14 @@ public class AirclueService extends Service {
 
         switch(cmd){
 
-            case 0:
+            case 0://시작
+                mStatus = 1;
                 setLocationProvider();
                 makeForgroundService();//forground service
                 break;
 
-            case 1:
+            case 1://종료
+                mStatus = 0;
                 stopForeground(true);
                 Toast.makeText(getApplicationContext(),"stopForeground", Toast.LENGTH_SHORT).show();
                 stopSelf();
@@ -89,6 +93,10 @@ public class AirclueService extends Service {
         super.onDestroy();
     }
 
+    public int getStatus(){
+        return mStatus;
+    }
+
     public void setLocationProvider(){
 
 
@@ -98,11 +106,12 @@ public class AirclueService extends Service {
         else{
             final LocationManager mLoca_mgr = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
-            Location location = mLoca_mgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            //Location location = mLoca_mgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Location location = mLoca_mgr.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             mLocation = location;
 
-            mLoca_mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, gpsLocationListener);
-            //mLoca_mgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 1, gpsLocationListener);
+            //mLoca_mgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, gpsLocationListener);
+            mLoca_mgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 1, gpsLocationListener);
         }
     }
 
