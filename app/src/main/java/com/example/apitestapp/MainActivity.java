@@ -3,7 +3,6 @@ package com.example.apitestapp;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +18,8 @@ public class MainActivity extends AppCompatActivity implements//AppCompatActivit
         fragment_2.OnFragmentInteractionListener,
         fragment_3.OnFragmentInteractionListener{//AppCompatActivity {
 
-    private TextView mTextMessage;
     BottomNavigationView navView;
+    Toolbar myToolbar;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -30,11 +29,7 @@ public class MainActivity extends AppCompatActivity implements//AppCompatActivit
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    //mTextMessage.setText(R.string.title_home);
-
-                    // item = findViewById(R.id.navigation_home);
-
-
+                    getSupportActionBar().setTitle("Airclue");//툴바 이름 변경
 
                     Fragment newFragment = new fragment_1();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -44,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements//AppCompatActivit
 
                     return true;
                 case R.id.navigation_dashboard:
-                    //mTextMessage.setText(R.string.title_dashboard);
+                    getSupportActionBar().setTitle("History");//툴바 이름 변경
 
                     Fragment newFragment2 = new fragment_2();
                     FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
@@ -54,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements//AppCompatActivit
 
                     return true;
                 case R.id.navigation_notifications:
-                    //mTextMessage.setText(R.string.title_notifications);
+                    getSupportActionBar().setTitle("Setting");//툴바 이름 변경
 
                     Fragment newFragment3 = new fragment_3();
                     FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
@@ -72,8 +67,12 @@ public class MainActivity extends AppCompatActivity implements//AppCompatActivit
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("Airclue");//툴바 이름 변경
+
         navView = findViewById(R.id.nav_view);
-        //mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
@@ -121,4 +120,5 @@ public class MainActivity extends AppCompatActivity implements//AppCompatActivit
             //스택에 넣었다면 클리어 필요
         }
     }
+
 }

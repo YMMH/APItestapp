@@ -14,10 +14,14 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AirclueService extends Service {
 
@@ -28,6 +32,8 @@ public class AirclueService extends Service {
     private Location mLocation;
 
     private int mStatus = 0;
+    private long mElapsed_time;
+    Timer mElapsedtime_timer;
 
     public AirclueService() {
     }
@@ -57,6 +63,7 @@ public class AirclueService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Toast.makeText(getApplicationContext(),"onBind", Toast.LENGTH_SHORT).show();
+        Log.d("AirclueService", "onBind()");
         return mBinder;
     }
     //-------------------
@@ -71,6 +78,9 @@ public class AirclueService extends Service {
 
             case 0://시작
                 mStatus = 1;
+
+                if(mElapsedtime_timer == null)
+                    startTimer();//타이머 시작
                 setLocationProvider();
                 makeForgroundService();//forground service
                 break;
@@ -90,11 +100,40 @@ public class AirclueService extends Service {
     @Override
     public void onDestroy(){
         Toast.makeText(getApplicationContext(),"Airclue Service destroyed", Toast.LENGTH_SHORT).show();
+        stopTimer();
+
         super.onDestroy();
     }
 
     public int getStatus(){
         return mStatus;
+    }
+
+    public long getElapsedTime(){
+        return mElapsed_time;
+    }
+
+    public void startTimer(){
+        //elapsed time timer start
+        mElapsed_time = 0;//경과 시간 초기화
+        mElapsedtime_timer = new Timer();
+        TimerTask tt2 = new TimerTask() {
+            @Override
+            public void run() {
+                mElapsed_time+=1000;
+            }
+        };
+
+        mElapsedtime_timer.schedule(tt2, 1000, 1000);
+    }
+
+    public void stopTimer() {
+
+        if (mElapsedtime_timer != null) {
+            mElapsedtime_timer.cancel();
+            mElapsedtime_timer.purge();
+            mElapsedtime_timer = null;
+        }
     }
 
     public void setLocationProvider(){
@@ -150,12 +189,12 @@ public class AirclueService extends Service {
         int notificationId = 1010;
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.airclue_icon);
+        builder.setSmallIcon(R.drawable.airclue_noti_icon);
         builder.setContentTitle("AirClue 서비스");
         builder.setContentText("AirClue 작동 중");
 
         //this leads user to activity when user touches noti,
-        Intent intent = new Intent(getApplicationContext(), CoreActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         PendingIntent contentIntent =
                 PendingIntent.getActivity(getApplicationContext(), 1010, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);

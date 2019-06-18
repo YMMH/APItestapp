@@ -15,7 +15,10 @@
 
     <!-- Splash theme. -->
     <style name="SplashTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowBackground">@drawable/airclue_cover</item>
+        <item name="android:windowBackground">@drawable/cover</item>
+        <!--
+        <item name="android:windowBackground">@drawable/splash_theme</item>
+        -->
     </style>
 
     <!-- Shadow on view. -->

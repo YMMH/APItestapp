@@ -13,14 +13,14 @@ public class SplashActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_splash);//theme가 있으면 중복x
 
         try{
-            Thread.sleep(500);
+            Thread.sleep(1500);
         }
         catch (InterruptedException e){
             e.printStackTrace();
         }
 
         //startActivity(new Intent(this, GoogleSignInActivity.class));
-        startActivity(new Intent(this, PhoneAuthActivity.class));
+        startActivity(new Intent(this, GoogleSignInActivity.class));
         finish();
     }
 }

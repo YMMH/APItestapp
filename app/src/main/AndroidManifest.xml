@@ -16,6 +16,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleInstance"
             android:label="@string/title_activity_main">
         </activity>
 
@@ -26,10 +27,11 @@
             android:exported="false" />
 
         <activity android:name=".GoogleSignInActivity" />
+
         <activity
             android:name=".SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

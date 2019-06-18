@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--화면 전환이 제대로 안돼서 실패-->
+
+    <include android:background="#696969"/>
+
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/airclue_logo"/>
+    </item>
+</layer-list>

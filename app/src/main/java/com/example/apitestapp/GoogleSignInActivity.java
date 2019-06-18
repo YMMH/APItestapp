@@ -182,12 +182,13 @@ public class GoogleSignInActivity extends AppCompatActivity implements
 
     private void updateUI(FirebaseUser user) {
         mProgressBar.setVisibility(View.INVISIBLE);
+        //findViewById(R.id.signIn2Button).setVisibility(View.GONE);
+
         if (user != null) {
             mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
             mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
 
             findViewById(R.id.signInButton).setVisibility(View.GONE);
-            findViewById(R.id.signIn2Button).setVisibility(View.GONE);
             //findViewById(R.id.nextButton).setVisibility(View.VISIBLE);
             findViewById(R.id.signOutAndDisconnect).setVisibility(View.VISIBLE);
         } else {
@@ -195,7 +196,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements
             mDetailTextView.setText(null);
 
             findViewById(R.id.signInButton).setVisibility(View.VISIBLE);
-            findViewById(R.id.signIn2Button).setVisibility(View.VISIBLE);
+            //indViewById(R.id.signIn2Button).setVisibility(View.VISIBLE);
             //findViewById(R.id.nextButton).setVisibility(View.GONE);
             findViewById(R.id.signOutAndDisconnect).setVisibility(View.GONE);
         }
@@ -214,7 +215,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements
         } else if (i == R.id.signIn2Button){
             signIn();
         } else if(i == R.id.nextButton){
-            startActivity(new Intent(this, CoreActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             //finish();
         }
     }

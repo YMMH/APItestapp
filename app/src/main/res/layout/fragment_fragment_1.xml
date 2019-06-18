@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey_300"
     tools:context=".ApiActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_end="211dp"/>
+        app:layout_constraintGuide_end="200dp"/>
 
     <ImageView
         android:id="@+id/circle_img"
@@ -22,82 +23,73 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="88dp"
-        android:layout_marginBottom="248dp"
-        android:src="@drawable/cyanframe"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
     <TextView
         android:id="@+id/position_static"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="172dp"
-        android:layout_marginBottom="324dp"
-        android:text="위치 :"
-        android:textColor="#00AAFF"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="위치"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/time_static"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="172dp"
-        android:layout_marginBottom="308dp"
-        android:text="경과 시간 :"
-        android:textColor="#00AAFF"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="40dp"
+        android:text="경과 시간"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
     <TextView
         android:id="@+id/provider_static"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="172dp"
-        android:layout_marginBottom="292dp"
-        android:text="제공자 :"
-        android:textColor="#00AAFF"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="70dp"
+        android:text="제공자"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/position_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginBottom="324dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="10dp"
         android:text=""
-        android:textColor="#888888"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/grey_700"
+        android:textSize="20dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/position_static" />
     <TextView
         android:id="@+id/time_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginBottom="308dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="40dp"
         android:text=""
-        android:textColor="#888888"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/grey_700"
+        android:textSize="20dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/time_static" />
     <TextView
         android:id="@+id/provider_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginBottom="292dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="70dp"
         android:text=""
-        android:textColor="#888888"
-        android:textSize="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/grey_700"
+        android:textSize="20dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/provider_static" />
 
 
@@ -126,8 +118,9 @@
         android:text="STOP"
         android:enabled="false"
         android:visibility="invisible"
-        android:layout_marginBottom="23dp"
-        app:layout_constraintLeft_toRightOf="@id/core_bt"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_marginBottom="40dp"
+        app:layout_constraintTop_toBottomOf="@id/core_bt"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
