@@ -116,37 +116,11 @@ public class fragment_1 extends Fragment implements View.OnClickListener {
 
         circle = view.findViewById(R.id.circle_img);
 
-        if(isServiceRunning()){//서비스 동작 중
-            Log.d("fragment_1", "AirclueService is running");
-            Intent intent = new Intent(getActivity(), AirclueService.class);//바운드
-            if(!mBound) {
-                getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-                mBound = true;
-            }
-
-            //애니메이션
-            Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_1);
-            circle.setAnimation(animation);
-            circle.setVisibility(View.INVISIBLE);//안해주면 안보임
-            circle.setVisibility(View.VISIBLE);
-
-            //버튼 설정
-            core_bt.setEnabled(false);
-            core_bt.setVisibility(View.INVISIBLE);
-            stop_bt.setVisibility(View.VISIBLE);
-            stop_bt.setEnabled(true);
-        }
-        else{
-            Log.d("fragment_1", "no AirclueService");
-        }
-
-
-
         return view;
     }
 
     //서비스 동작 체크
-    public boolean isServiceRunning()
+    public boolean isAirclueServiceRunning()
     {
         ActivityManager manager = (ActivityManager) getActivity().getSystemService(Context.ACTIVITY_SERVICE);
 
@@ -246,11 +220,40 @@ public class fragment_1 extends Fragment implements View.OnClickListener {
         Log.d("fragment_1", "onStart");
 
         //타이머 시작
-        startTimer(1);
-        startTimer(2);
+        if(isAirclueServiceRunning()){//서비스 동작 중
+            Log.d("fragment_1", "AirclueService is running");
+
+            //바운드
+            Intent intent = new Intent(getActivity(), AirclueService.class);
+            if(!mBound) {
+                getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+                mBound = true;
+            }
+
+            startTimer(1);
+            startTimer(2);
+
+
+            //애니메이션
+            Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_1);
+            circle.setAnimation(animation);
+            circle.setVisibility(View.INVISIBLE);//안해주면 안보임
+            circle.setVisibility(View.VISIBLE);
+
+            //버튼 설정
+            core_bt.setEnabled(false);
+            core_bt.setVisibility(View.INVISIBLE);
+            stop_bt.setVisibility(View.VISIBLE);
+            stop_bt.setEnabled(true);
+        }
+        else{
+            Log.d("fragment_1", "no AirclueService");
+        }
     }
 
     public void stopTimer(int type){
+
+        Log.d("fragment_1", "stopTimer()");
 
         //type : 1(location), 2(elapsed time)
         if(type == 1){
@@ -281,8 +284,10 @@ public class fragment_1 extends Fragment implements View.OnClickListener {
         stopTimer(2);
 
         //unbind service
-        if(mBound)
+        if(mBound) {
             getActivity().unbindService(mConnection);
+            mBound = false;
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -351,80 +356,23 @@ public class fragment_1 extends Fragment implements View.OnClickListener {
             if(!mBound)
                 getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
+            //타이머
+            if(location_timer == null){
+                startTimer(1);
+            }
+            if(elapsedtime_timer == null){
+                startTimer(2);
+            }
+
             //애니메이션
             Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.anim_1);
             circle.setAnimation(animation);
             circle.setVisibility(View.INVISIBLE);//안해주면 안보임
             circle.setVisibility(View.VISIBLE);
 
-/*
-            //타이머를 서비스에서 돌려야 할듯?
-            //그리고 시작됐을 때 서비스가 돌고 있으면 타이머랑 애니메이션 동작시켜야 함
-            //위치 타이머
-            location_timer = new Timer();
-            TimerTask tt = new TimerTask() {
-                @Override
-                public void run() {
-                    Location location = mService.getLocation();
-                    String lat = String.format("%.6f",location.getLatitude());
-                    String lng = String.format("%.6f",location.getLongitude());
-                    final String string = "위도 "+lat + ",  경도 " + lng;
-                    final TextView textView = getView().findViewById(R.id.position_text);
-
-                    //+
-                    final String string2 = location.getProvider();
-                    final TextView textView2 = getView().findViewById(R.id.provider_text);
-                    //+
-
-                    //ui thread가 아닌 thread에서 ui변경을 위한 메소드 호출
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            textView.setText(string);
-                            textView2.setText(string2);
-                        }
-                    });
-                }
-            };
-
-            location_timer.schedule(tt, 1000, 5000);
-            location_timer_flag = 1;
-*/
-/*
-            //경과시간 타이머
-            cnt = 0;
-            elapsedtime_timer = new Timer();
-            TimerTask tt2 = new TimerTask() {
-                @Override
-                public void run() {
-
-
-                    final String string = GetTime(cnt);
-                    final TextView textView = getView().findViewById(R.id.time_text);
-
-                    //ui thread가 아닌 thread에서 ui변경을 위한 메소드 호출
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            textView.setText(string);
-                        }
-                    });
-
-                    cnt+=1000;
-                }
-            };
-
-            elapsedtime_timer.schedule(tt2, 1000, 1000);
-            elapsedtime_timer_flag = 1;
-*/
-
             getView().findViewById(R.id.core_bt).setVisibility(View.INVISIBLE);
             getView().findViewById(R.id.right_bt).setVisibility(View.VISIBLE);
             getView().findViewById(R.id.right_bt).setEnabled(true);
-
-
         }
         else if (i == R.id.right_bt){
 

@@ -192,7 +192,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements
             //findViewById(R.id.nextButton).setVisibility(View.VISIBLE);
             findViewById(R.id.signOutAndDisconnect).setVisibility(View.VISIBLE);
         } else {
-            mStatusTextView.setText(R.string.signed_out);//수정
+            mStatusTextView.setText("로그아웃 됨");//수정
             mDetailTextView.setText(null);
 
             findViewById(R.id.signInButton).setVisibility(View.VISIBLE);
